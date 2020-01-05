@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lab_package.E0_controller">
    <children>
       <Separator prefWidth="200.0" />
       <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="ALWAYS">
