@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" spacing="5.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.E4_controller">
    <children>
       <TextField promptText="Wyszukiwanie">
          <VBox.margin>
@@ -31,7 +31,7 @@
             <Insets left="5.0" right="5.0" />
          </VBox.margin>
       </TextArea>
-      <Button mnemonicParsing="false" prefWidth="100.0" text="Wstecz" />
+      <Button fx:id="b_cancel" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Wstecz" />
       <Separator prefWidth="200.0" />
       <AnchorPane prefHeight="15.0" VBox.vgrow="NEVER">
          <children>
