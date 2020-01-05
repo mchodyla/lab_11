@@ -1,4 +1,4 @@
-package lab_package;
+package gui;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
