@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -38,12 +40,18 @@ public class E0_controller implements Initializable {
     @FXML
     private Button b_tables;
 
-    @FXML
-    //private void load;
+    private StringProperty statusProperty = new SimpleStringProperty("Status");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //TODO : Odpalić connection do DB.
+        statusProperty.addListener((observableValue, oldValue, newValue) -> {
+            setStatusText(newValue);
+        });
+    }
+
+    public void setStatusText(String newStatus){
+        this.l_status.setText(newStatus);
     }
 
     public void gotoInternal(ActionEvent event) throws Exception{
