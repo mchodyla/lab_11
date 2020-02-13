@@ -36,5 +36,3 @@ VALUES ('Sklejka 3mm 1000x1000', 5, to_date('20-10-2015', 'DD-MM-YYYY'), 80.00);
 
 INSERT INTO material (name, quantity, purchase_date, price) 
 VALUES ('Sklejka 5mm 1000x1000', 2, to_date('20-10-2016', 'DD-MM-YYYY'), 90.00);
-
--- Import Data into table material from file D:\Program Files (x86)\Marcin\3. Uczelnia\Bazy 2\lab_11_develop\src\data\material.csv . Task successful and sent to worksheet.
