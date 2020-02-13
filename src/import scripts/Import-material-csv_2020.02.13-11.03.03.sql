@@ -3,7 +3,7 @@ SET DEFINE OFF
 CREATE TABLE material ( name VARCHAR2(26),
 quantity INTEGER,
 purchase_date DATE,
-price NUMBER(38, 2) NOT NULL);
+price NUMBER(38, 2));
 
 
 

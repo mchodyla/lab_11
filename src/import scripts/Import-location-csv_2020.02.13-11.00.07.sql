@@ -1,8 +1,6 @@
 SET DEFINE OFF
 
-CREATE TABLE location ( room -- 1.0 - VARCHAR2(26),
-                             -- 1,0 - NUMBER(38,1),
-                             -- 1 - INTEGER,
+CREATE TABLE location ( room VARCHAR2(26),
 place VARCHAR2(26));
 
 
