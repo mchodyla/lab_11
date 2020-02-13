@@ -9,31 +9,33 @@ INSERT INTO employee (name, email)
 VALUES ('Jan Kowalski', 'jk@mail.com');
 
 INSERT INTO employee (name, email) 
-VALUES ('Janusz Wπsacz', '');
+VALUES ('Janusz WƒÖsacz', '');
 
 INSERT INTO employee (name, email) 
-VALUES ('Bart≥omiej Pogodny', 'bp@idk.pl');
+VALUES ('Bart≈Çomiej Pogodny', 'bp@idk.pl');
 
 INSERT INTO employee (name, email) 
 VALUES ('Mariusz Zafrasowany', '');
 
 INSERT INTO employee (name, email) 
-VALUES ('Miko≥aj Rosjanin', '');
+VALUES ('Miko≈Çaj Rosjanin', '');
 
 INSERT INTO employee (name, email) 
 VALUES ('Projektant Zaliczacz', 'pz@administracja.co.uk');
 
 INSERT INTO employee (name, email) 
-VALUES ('Kolega Dzia≥owy', '');
+VALUES ('Kolega Dzia≈Çowy', '');
 
 INSERT INTO employee (name, email) 
-VALUES ('Obcy Pozadzia≥owy', '');
+VALUES ('Obcy Pozadzia≈Çowy', '');
 
 INSERT INTO employee (name, email) 
-VALUES ('Obcy ”smy', 'alien@mail.com');
+VALUES ('Obcy √ìsmy', 'alien@mail.com');
 
 INSERT INTO employee (name, email) 
-VALUES ('Pasaøer Nostromo', '');
+VALUES ('Pasa≈ºer Nostromo', '');
 
 INSERT INTO employee (name, email) 
-VALUES ('Zbigniew Postdzia≥owicz', '');
+VALUES ('Zbigniew Postdzia≈Çowicz', '');
+
+-- Import Data into table employee from file D:\Program Files (x86)\Marcin\3. Uczelnia\Bazy 2\lab_11_develop\src\data\employee.csv . Task successful and sent to worksheet.
