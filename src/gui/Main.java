@@ -38,16 +38,6 @@ public class Main extends Application {
     public void printResult(ResultSet rs, ArrayList<String> colNames) throws SQLException {
         ResultSetMetaData rsMetaData = rs.getMetaData();
         int n = rsMetaData.getColumnCount();
-
-        while (rs.next()){
-            for(int i = 1; i <= n; i++){
-                if(i == 1){
-                    System.out.print(rsMetaData.getColumnName(i) + "\t");
-                }else{
-                    System.out.println(rs.getString(i));
-                }
-            }
-        }
     }
 
     public static void main(String[] args) {
