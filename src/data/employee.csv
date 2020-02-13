@@ -1,12 +1,12 @@
-name,email
-Jan Kowalski,jk@mail.com
-Janusz Wąsacz,
-Bartłomiej Pogodny,bp@idk.pl
-Mariusz Zafrasowany,
-Mikołaj Rosjanin,
-Projektant Zaliczacz,pz@administracja.co.uk
-Kolega Działowy,
-Obcy Pozadziałowy,
-Obcy Ósmy,
-Pasażer Nostromo,
-Zbigniew Postdziałowicz,
+name,email,department
+Jan Kowalski,jk@mail.com,nasz dział
+Janusz Wąsacz,,inny dział 1
+Bartłomiej Pogodny,bp@idk.pl,inny dział 2
+Mariusz Zafrasowany,,inny dział 3
+Mikołaj Rosjanin,,nasz dział
+Projektant Zaliczacz,pz@administracja.co.uk,inny dział 1
+Kolega Działowy,,inny dział 2
+Obcy Pozadziałowy,,inny dział 3
+Obcy Ósmy,,inny dział 2
+Pasażer Nostromo,,nasz dział
+Zbigniew Postdziałowicz,,inny dział 2
