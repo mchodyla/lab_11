@@ -5,13 +5,13 @@ CREATE TABLE department ( name VARCHAR2(26));
 
 
 INSERT INTO department (name) 
-VALUES ('nasz dzia≥');
+VALUES ('nasz dzia≈Ç');
 
 INSERT INTO department (name) 
-VALUES ('inny dzia≥ 1');
+VALUES ('inny dzia≈Ç 1');
 
 INSERT INTO department (name) 
-VALUES ('inny dzia≥ 2');
+VALUES ('inny dzia≈Ç 2');
 
 INSERT INTO department (name) 
-VALUES ('inny dzia≥ 3');
+VALUES ('inny dzia≈Ç 3');
