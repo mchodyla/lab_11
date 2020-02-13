@@ -9,7 +9,7 @@ INSERT INTO location (room, place)
 VALUES ('1.0', 'szafka');
 
 INSERT INTO location (room, place) 
-VALUES ('1.0', 'st蟪');
+VALUES ('1.0', 'st贸艂');
 
 INSERT INTO location (room, place) 
 VALUES ('1.0', 'szafa');
@@ -18,13 +18,13 @@ INSERT INTO location (room, place)
 VALUES ('1.0', 'biurko');
 
 INSERT INTO location (room, place) 
-VALUES ('1.0', 'p蟪ka');
+VALUES ('1.0', 'p贸艂ka');
 
 INSERT INTO location (room, place) 
 VALUES ('2.0', 'szafka');
 
 INSERT INTO location (room, place) 
-VALUES ('2.0', 'st蟪');
+VALUES ('2.0', 'st贸艂');
 
 INSERT INTO location (room, place) 
 VALUES ('2.0', 'szafa');
@@ -33,4 +33,4 @@ INSERT INTO location (room, place)
 VALUES ('2.0', 'biurko');
 
 INSERT INTO location (room, place) 
-VALUES ('2.0', 'p蟪ka');
+VALUES ('2.0', 'p贸艂ka');
