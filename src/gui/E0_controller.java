@@ -1,23 +1,21 @@
 package gui;
 
+import db.DB_utility;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.layout.VBox;
-
 import javafx.scene.control.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 
-public class E0_controller implements Initializable {
+public class E0_controller extends GenericController {
+    private FXMLLoader loader;
 
     @FXML
     private VBox rootVBox;
@@ -42,14 +40,6 @@ public class E0_controller implements Initializable {
 
     private StringProperty statusProperty = new SimpleStringProperty("Status");
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        //TODO : Odpalić connection do DB.
-        statusProperty.addListener((observableValue, oldValue, newValue) -> {
-            setStatusText(newValue);
-        });
-    }
-
     public void setStatusText(String newStatus){
         this.l_status.setText(newStatus);
     }
@@ -69,7 +59,8 @@ public class E0_controller implements Initializable {
     }
 
     public void gotoTools(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("E3_tools.fxml"));
+        loader = new FXMLLoader(getClass().getResource("E3_tools.fxml"));
+        Parent root = loader.load();
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 500, 300));
         window.show();

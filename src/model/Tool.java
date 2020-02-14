@@ -2,12 +2,23 @@ package model;
 
 import oracle.sql.DATE;
 
+import java.sql.Date;
+
 public class Tool {
     private Integer id;
     private String name;
-    private DATE purchase_date;
+    private Date purchase_date;
     private Float price;
     private Location location;
+
+    @Override
+    public String toString() {
+        return name +" "+ purchase_date.toString() +" "+ price.toString() +" "+ location.toString();
+    }
+
+    public String getUniqueName(){
+        return name + "-" + id.toString();
+    }
 
     public Integer getId() {
         return id;
@@ -25,11 +36,11 @@ public class Tool {
         this.name = name;
     }
 
-    public DATE getPurchase_date() {
+    public Date getPurchase_date() {
         return purchase_date;
     }
 
-    public void setPurchase_date(DATE purchase_date) {
+    public void setPurchase_date(Date purchase_date) {
         this.purchase_date = purchase_date;
     }
 

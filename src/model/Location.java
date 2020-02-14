@@ -8,6 +8,11 @@ public class Location {
         return room;
     }
 
+    @Override
+    public String toString() {
+        return room +" "+ place;
+    }
+
     public void setRoom(String room) {
         this.room = room;
     }
@@ -17,6 +22,11 @@ public class Location {
     }
 
     public void setPlace(String place) {
+        this.place = place;
+    }
+
+    public Location(String room, String place){
+        this.room = room;
         this.place = place;
     }
 }
