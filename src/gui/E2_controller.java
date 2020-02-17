@@ -17,7 +17,7 @@ public class E2_controller {
     public void gotoMenu(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 500, 300));
+        window.setScene(new Scene(root, 600, 400));
         window.show();
     }
 }

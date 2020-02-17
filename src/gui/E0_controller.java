@@ -21,9 +21,6 @@ public class E0_controller extends GenericController {
     private VBox rootVBox;
 
     @FXML
-    private Label l_status;
-
-    @FXML
     private Button b_internal;
 
     @FXML
@@ -40,21 +37,21 @@ public class E0_controller extends GenericController {
 
     private StringProperty statusProperty = new SimpleStringProperty("Status");
 
-    public void setStatusText(String newStatus){
-        this.l_status.setText(newStatus);
+    public void initialize(){
+        this.updateStatus("TEST");
     }
 
     public void gotoInternal(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E1_internal.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 500, 300));
+        window.setScene(new Scene(root, 600, 400));
         window.show();
     }
 
     public void gotoExternal(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E2_external.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 500, 300));
+        window.setScene(new Scene(root, 600, 400));
         window.show();
     }
 
@@ -62,21 +59,21 @@ public class E0_controller extends GenericController {
         loader = new FXMLLoader(getClass().getResource("E3_tools.fxml"));
         Parent root = loader.load();
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 500, 300));
+        window.setScene(new Scene(root, 600, 400));
         window.show();
     }
 
     public void gotoMaterials(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E4_materials.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 500, 300));
+        window.setScene(new Scene(root, 600, 400));
         window.show();
     }
 
     public void gotoTables(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E5_tables.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 500, 300));
+        window.setScene(new Scene(root, 600, 400));
         window.show();
     }
 }

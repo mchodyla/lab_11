@@ -27,6 +27,7 @@ public class DB_utility {
             System.out.println("Połączono z bazą danych");
         } catch (SQLException e){
             System.err.println("Nie udało sie połączyć z bazą");
+            return null;
         }
 
         return connection;
@@ -39,7 +40,7 @@ public class DB_utility {
                 System.out.println("DB connection closed!");
             }
         } catch(SQLException e){
-            System.err.println("idk what to say");
+            System.err.println("Could not close DB connection!");
         }
     }
 

@@ -3,6 +3,7 @@ package gui;
 import com.sun.javafx.logging.Logger;
 import db.DB_utility;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,12 +18,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
         primaryStage.setTitle("LAB");
-        primaryStage.setScene(new Scene(root, 500, 300));
+        primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
 
-        Connection c = DB_utility.getConnection();
-
-        //ResultSet rs = DB_utility.executeQuery("select * from test");
+        if(DB_utility.getConnection() == null){
+            Platform.exit();
+            System.exit(0);
+        };
     }
 
     @Override

@@ -10,7 +10,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return room +" "+ place;
+        return "pok. "+room +" , "+ place;
     }
 
     public void setRoom(String room) {
