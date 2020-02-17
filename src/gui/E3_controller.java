@@ -1,9 +1,11 @@
 package gui;
 
 import db.DB_utility;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -30,6 +32,10 @@ public class E3_controller extends GenericController{
 
     @FXML
     public Button b_cancel;
+    @FXML
+    public Button b_rent;
+    @FXML
+    public Button b_return;
     @FXML
     public TextField searchField;
     @FXML
@@ -116,7 +122,10 @@ public class E3_controller extends GenericController{
         });
 
     /** UI setup :
-        COMBOBOX, TOGGLE BUTTONS **/
+        COMBOBOX, BUTTONS **/
+
+        b_rent.disableProperty().bind(radioButtonReturning.selectedProperty());
+        b_return.disableProperty().bind(radioButtonRenting.selectedProperty());
 
         comboBox.disableProperty().bind(radioButtonReturning.selectedProperty());
         comboBox.setCellFactory(new Callback<ListView<Employee>, ListCell<Employee>>() {

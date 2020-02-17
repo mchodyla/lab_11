@@ -20,7 +20,7 @@
          </children>
       </HBox>
       <TableView prefHeight="200.0" />
-      <Button fx:id="b_cancel" defaultButton="true" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Wstecz" />
+      <Button fx:id="b_cancel" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Wstecz" />
       <Separator prefWidth="200.0" />
       <AnchorPane prefHeight="15.0" VBox.vgrow="NEVER">
          <children>

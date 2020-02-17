@@ -47,8 +47,21 @@
       </TableView>
       <HBox alignment="CENTER" spacing="250.0" VBox.vgrow="NEVER">
          <children>
-            <Button fx:id="b_cancel" defaultButton="true" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Anuluj" />
-            <Button disable="true" mnemonicParsing="false" prefWidth="100.0" text="Wypożycz" />
+            <Button fx:id="b_cancel" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Anuluj" />
+            <HBox>
+               <children>
+                  <Button fx:id="b_rent" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Wypożycz">
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="b_return" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Oddaj">
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
       </HBox>
       <Separator prefWidth="200.0" />

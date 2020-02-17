@@ -40,7 +40,7 @@
       </HBox>
       <HBox alignment="CENTER" spacing="5.0">
          <children>
-            <Button fx:id="b_cancel" defaultButton="true" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Wstecz" />
+            <Button fx:id="b_cancel" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Wstecz" />
             <Button mnemonicParsing="false" prefWidth="100.0" text="Dodaj" />
             <Button mnemonicParsing="false" prefWidth="100.0" text="Usuń" />
          </children>
