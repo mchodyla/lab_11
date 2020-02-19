@@ -1,14 +1,9 @@
 package gui;
 
 import db.DB_utility;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableBooleanValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -27,6 +22,7 @@ import model.Location;
 import model.Tool;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class E3_controller extends GenericController{
 
@@ -69,7 +65,7 @@ public class E3_controller extends GenericController{
             leftListView.setItems(toolsList);
         } else {
             for (Tool tool : leftListView.getItems()) {
-                String filterText = tool.getUniqueName();
+                String filterText = tool.getResourceName();
                 if (filterText.toUpperCase().contains(searchField.getText().toUpperCase())) {
                     filteredList.add(tool);
                 }
@@ -78,11 +74,34 @@ public class E3_controller extends GenericController{
         }
     }
 
+    public void rentATool(){
+        if(comboBox.getSelectionModel().getSelectedItem() != null && !rightListView.getItems().isEmpty()){
+            Employee e = comboBox.getSelectionModel().getSelectedItem();
+            ArrayList<Tool> tools =  new ArrayList<Tool>(rightListView.getItems());
+
+            System.out.println("Employee : " + e.getName());
+            System.out.println("Tools to rent: ");
+            for (Tool t : tools) {
+                System.out.println(t.getResourceName());
+            }
+        }
+    }
+
+    public void returnTools(){
+        if(!rightListView.getItems().isEmpty()){
+            ArrayList<Tool> tools = new ArrayList<>(rightListView.getItems());
+            System.out.println("Tools to return: ");
+            for (Tool t : tools) {
+                System.out.println(t.getResourceName());
+            }
+        }
+    }
+
     public void initialize(){
 
         updateStatus("Sending SQL query...");
 
-     /** Initial DB queries **/
+    /** Initial DB queries **/
 
         setResultSet(DB_utility.executeQuery("SELECT * FROM TOOL"));
 
@@ -189,7 +208,7 @@ public class E3_controller extends GenericController{
                 if(item==null){
                     setText(null);
                 }else {
-                    setText(item.getUniqueName());
+                    setText(item.getResourceName());
                 }
             }
         });
@@ -201,7 +220,7 @@ public class E3_controller extends GenericController{
                 if(item==null){
                     setText(null);
                 }else {
-                    setText(item.getUniqueName());
+                    setText(item.getResourceName());
                 }
             }
         });

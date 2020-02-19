@@ -50,12 +50,12 @@
             <Button fx:id="b_cancel" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Anuluj" />
             <HBox>
                <children>
-                  <Button fx:id="b_rent" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Wypożycz">
+                  <Button fx:id="b_rent" disable="true" mnemonicParsing="false" onAction="#rentATool" prefWidth="100.0" text="Wypożycz">
                      <HBox.margin>
                         <Insets right="5.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="b_return" disable="true" mnemonicParsing="false" prefWidth="100.0" text="Oddaj">
+                  <Button fx:id="b_return" disable="true" mnemonicParsing="false" onAction="#returnTools" prefWidth="100.0" text="Oddaj">
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>

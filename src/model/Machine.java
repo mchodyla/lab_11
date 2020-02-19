@@ -1,6 +1,6 @@
 package model;
 
-public class Machine {
+public class Machine implements Resource {
     private Integer id;
     private String name;
     private Location location;
@@ -27,5 +27,10 @@ public class Machine {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public String getResourceName() {
+        return name + "-" + id.toString();
     }
 }

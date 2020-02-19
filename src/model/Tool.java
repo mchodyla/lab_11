@@ -4,7 +4,7 @@ import oracle.sql.DATE;
 
 import java.sql.Date;
 
-public class Tool {
+public class Tool implements Resource{
     private Integer id;
     private String name;
     private Date purchase_date;
@@ -16,7 +16,7 @@ public class Tool {
         return name +" "+ purchase_date.toString() +" "+ price.toString() +" "+ location.toString();
     }
 
-    public String getUniqueName(){
+    public String getResourceName(){
         return name + "-" + id.toString();
     }
 

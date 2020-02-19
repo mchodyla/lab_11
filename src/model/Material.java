@@ -2,11 +2,13 @@ package model;
 
 import oracle.sql.DATE;
 
-public class Material {
+import java.sql.Date;
+
+public class Material implements Resource{
     private Integer id;
     private String name;
     private String amount;
-    private DATE purchase_date;
+    private Date purchase_date;
     private Float price;
     private Location location;
 
@@ -34,11 +36,11 @@ public class Material {
         this.amount = amount;
     }
 
-    public DATE getPurchase_date() {
+    public Date getPurchase_date() {
         return purchase_date;
     }
 
-    public void setPurchase_date(DATE purchase_date) {
+    public void setPurchase_date(Date purchase_date) {
         this.purchase_date = purchase_date;
     }
 
@@ -56,5 +58,10 @@ public class Material {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    public String getResourceName() {
+        return name + "-" + id.toString();
     }
 }
