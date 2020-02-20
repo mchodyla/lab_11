@@ -1,23 +1,69 @@
 package gui;
 
-import javafx.event.ActionEvent;
+import db.DB_utility;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.Node;
-import javafx.stage.Stage;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.util.Callback;
+import model.Employee;
 
-public class E2_controller {
+import java.sql.SQLException;
+
+public class E2_controller extends E1_controller {
 
     @FXML
-    public Button b_cancel;
+    public ComboBox<Employee> consumerBox;
 
-    public void gotoMenu(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 600, 400));
-        window.show();
+    private ObservableList<Employee> consumerEmployees = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize() {
+        setResultSet(DB_utility.executeQuery("SELECT * FROM EMPLOYEE"));
+
+        try{
+            while (getResultSet().next()){
+                Employee employee = new Employee();
+                employee.setName(getResultSet().getString("NAME"));
+                employee.setEmail(getResultSet().getString("EMAIL"));
+                employee.setDepartmentName(getResultSet().getString("DEPARTMENT_NAME"));
+                consumerEmployees.add(employee);
+            }
+        }catch(SQLException e){
+            System.err.println("SQLException podczas ładowania wyniku EMPLOYEE!");
+            updateStatusLeft("SQLException!");
+        }
+
+        consumerBox.setCellFactory(new Callback<ListView<Employee>, ListCell<Employee>>() {
+            @Override
+            public ListCell<Employee> call(ListView<Employee> employeeListView) {
+                return new ListCell<Employee>(){
+                    @Override
+                    protected void updateItem(Employee item, boolean b) {
+                        super.updateItem(item, b);
+                        if(item == null || b) {
+                            setText("");
+                        }else{
+                            setText(item.getName());
+                        }
+                    }
+                };
+            }
+        });
+        consumerBox.setButtonCell(new ListCell<>(){
+            @Override
+            protected void updateItem(Employee employee, boolean b) {
+                super.updateItem(employee, b);
+                if(employee != null){
+                    setText(employee.getName());
+                }
+            }
+        });
+
+        consumerBox.setItems(consumerEmployees);
+
+        super.initialize();
     }
 }

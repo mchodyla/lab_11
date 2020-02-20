@@ -1,6 +1,5 @@
 package gui;
 
-import db.DB_utility;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
@@ -38,13 +37,14 @@ public class E0_controller extends GenericController {
     private StringProperty statusProperty = new SimpleStringProperty("Status");
 
     public void initialize(){
-        this.updateStatus("TEST");
+        this.updateStatusLeft("TEST");
     }
 
     public void gotoInternal(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E1_internal.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
+        window.setTitle("Usługa Wewnętrzna");
         window.show();
     }
 
@@ -52,14 +52,15 @@ public class E0_controller extends GenericController {
         Parent root = FXMLLoader.load(getClass().getResource("E2_external.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
+        window.setTitle("Usługa Zewnętrzna");
         window.show();
     }
 
     public void gotoTools(ActionEvent event) throws Exception{
-        loader = new FXMLLoader(getClass().getResource("E3_tools.fxml"));
-        Parent root = loader.load();
+        Parent root = FXMLLoader.load(getClass().getResource("E3_tools.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
+        window.setTitle("Narzędzia");
         window.show();
     }
 
@@ -67,6 +68,7 @@ public class E0_controller extends GenericController {
         Parent root = FXMLLoader.load(getClass().getResource("E4_materials.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
+        window.setTitle("Materiały");
         window.show();
     }
 
@@ -74,6 +76,7 @@ public class E0_controller extends GenericController {
         Parent root = FXMLLoader.load(getClass().getResource("E5_tables.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
+        window.setTitle("Edycja Tabel");
         window.show();
     }
 }

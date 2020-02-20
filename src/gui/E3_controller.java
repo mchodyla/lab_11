@@ -5,17 +5,11 @@ import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Employee;
 import model.Location;
@@ -26,8 +20,6 @@ import java.util.ArrayList;
 
 public class E3_controller extends GenericController{
 
-    @FXML
-    public Button b_cancel;
     @FXML
     public Button b_rent;
     @FXML
@@ -50,13 +42,6 @@ public class E3_controller extends GenericController{
     private ObservableList<Tool> toolsList = FXCollections.observableArrayList();
     private ObservableList<Tool> selectedToolsList = FXCollections.observableArrayList();
     private ObservableList<Employee> employees = FXCollections.observableArrayList();
-
-    public void gotoMenu(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 600, 400));
-        window.show();
-    }
 
     public void filterList(String oldValue, String newValue){
 
@@ -99,7 +84,9 @@ public class E3_controller extends GenericController{
 
     public void initialize(){
 
-        updateStatus("Sending SQL query...");
+        updateStatusLeft("Sending SQL query...");
+
+    //TODO : napisać SQL "select wypożyczone" i "select niewypożyczone", wpisać do dwóch różnych list, wyświetlać różne w zależności od stanu toggle buttona
 
     /** Initial DB queries **/
 
@@ -115,10 +102,10 @@ public class E3_controller extends GenericController{
                 tool.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
                 toolsList.add(tool);
             }
-            updateStatus("");
+            updateStatusLeft("");
         } catch (SQLException e){
             System.err.println("SQLException podczas ładowania wyniku tools!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
         setResultSet(DB_utility.executeQuery("SELECT * FROM EMPLOYEE"));
@@ -133,7 +120,7 @@ public class E3_controller extends GenericController{
             }
         }catch(SQLException e){
             System.err.println("SQLException podczas ładowania wyniku tools!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
         searchField.textProperty().addListener((observableValue, s, t1) -> {

@@ -1,23 +1,19 @@
 package gui;
 
 import db.DB_utility;
-import javafx.beans.property.StringProperty;
+import javafx.beans.InvalidationListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.Node;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.*;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 public class E1_controller extends GenericController{
@@ -25,7 +21,7 @@ public class E1_controller extends GenericController{
     @FXML
     public Label dateLabel;
     @FXML
-    public Button b_cancel, b_save;
+    public Button b_save;
     @FXML
     public ComboBox<Employee> providerBox;
     @FXML
@@ -41,7 +37,7 @@ public class E1_controller extends GenericController{
     @FXML
     public TextArea descriptionArea;
 
-    private ObservableList<Employee> employees = FXCollections.observableArrayList();
+    private ObservableList<Employee> providerEmployees = FXCollections.observableArrayList();
     private ObservableList<String> serviceTypes = FXCollections.observableArrayList();
     private ObservableList<String> resourceTypes = FXCollections.observableArrayList(Arrays.asList("Maszyny","Materiały","Narzędzia"));
 
@@ -82,11 +78,11 @@ public class E1_controller extends GenericController{
                 employee.setName(getResultSet().getString("NAME"));
                 employee.setEmail(getResultSet().getString("EMAIL"));
                 employee.setDepartmentName(getResultSet().getString("DEPARTMENT_NAME"));
-                employees.add(employee);
+                providerEmployees.add(employee);
             }
         }catch(SQLException e){
             System.err.println("SQLException podczas ładowania wyniku EMPLOYEE!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
         setResultSet(DB_utility.executeQuery("SELECT * FROM SERVICE_TYPE"));
@@ -98,7 +94,7 @@ public class E1_controller extends GenericController{
             }
         }catch(SQLException e){
             System.err.println("SQLException podczas ładowania wyniku SERVICE_TYPE!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
         setResultSet(DB_utility.executeQuery("SELECT * FROM MACHINE"));
@@ -111,10 +107,10 @@ public class E1_controller extends GenericController{
                 machine.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
                 machinesList.add(machine);
             }
-            updateStatus("");
+            updateStatusLeft("");
         } catch (SQLException e){
             System.err.println("SQLException podczas ładowania wyniku MACHINE!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
         setResultSet(DB_utility.executeQuery("SELECT * FROM MATERIAL"));
@@ -129,10 +125,10 @@ public class E1_controller extends GenericController{
                 material.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
                 materialsList.add(material);
             }
-            updateStatus("");
+            updateStatusLeft("");
         } catch (SQLException e){
             System.err.println("SQLException podczas ładowania wyniku MATERIAL!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
         setResultSet(DB_utility.executeQuery("SELECT * FROM TOOL"));
@@ -147,14 +143,17 @@ public class E1_controller extends GenericController{
                 tool.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
                 toolsList.add(tool);
             }
-            updateStatus("");
+            updateStatusLeft("");
         } catch (SQLException e){
             System.err.println("SQLException podczas ładowania wyniku TOOL!");
-            updateStatus("SQLException!");
+            updateStatusLeft("SQLException!");
         }
 
     /** UI setup :
-        DESCRIPTION AREA, COMBO BOXES **/
+        DATE, DESCRIPTION AREA, COMBO BOXES **/
+
+        updateStatusLeft("Data wykonania usługi: ");
+        updateStatusRight(new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Timestamp(System.currentTimeMillis())));
 
         descriptionArea.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS ? change : null));
@@ -212,7 +211,7 @@ public class E1_controller extends GenericController{
                 }
             }
         });
-        providerBox.setItems(employees);
+        providerBox.setItems(providerEmployees);
 
         serviceBox.setItems(serviceTypes);
 
@@ -264,6 +263,12 @@ public class E1_controller extends GenericController{
             }
         });
 
+        Label placeholderLeft = new Label("Wyszukiwarka");
+        Label placeholderRight = new Label("Wykorzystane zasoby");
+
+        leftListView.setPlaceholder(placeholderLeft);
+        rightListView.setPlaceholder(placeholderRight);
+
     /** UI setup :
         FILTERING **/
 
@@ -271,13 +276,40 @@ public class E1_controller extends GenericController{
             filterResources(s,t1);
         });
 
-    }
+        //TODO: po wybraniu pracownika z jednej z list usunąć go z drugiej i vice versa
+        //TODO: Odblokować guzik "Zapis" wtw gdy : (provider, consumer, service type) są wybrane !
 
+        b_save.disableProperty().bind(new ObservableBooleanValue() {
+            @Override
+            public boolean get() {
+                return false;
+            }
 
-    public void gotoMenu(ActionEvent event) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        window.setScene(new Scene(root, 600, 400));
-        window.show();
+            @Override
+            public void addListener(ChangeListener<? super Boolean> changeListener) {
+
+            }
+
+            @Override
+            public void removeListener(ChangeListener<? super Boolean> changeListener) {
+
+            }
+
+            @Override
+            public Boolean getValue() {
+                return null;
+            }
+
+            @Override
+            public void addListener(InvalidationListener invalidationListener) {
+
+            }
+
+            @Override
+            public void removeListener(InvalidationListener invalidationListener) {
+
+            }
+        });
+
     }
 }
