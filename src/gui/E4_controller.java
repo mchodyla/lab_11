@@ -21,7 +21,7 @@ import java.sql.SQLException;
 public class E4_controller extends GenericController {
 
     @FXML
-    public TableView<Material> tableView;
+    public TableView<Resource> tableView;
     @FXML
     public ListView<Resource> listView;
     @FXML
@@ -29,11 +29,15 @@ public class E4_controller extends GenericController {
     @FXML
     public ComboBox<String> comboBox;
     @FXML
+    public ComboBox<Location> locationBox;
+    @FXML
     public TabPane tabPane;
     @FXML
     public Tab tabWarehouse;
     @FXML
     public Tab tabAdd;
+    @FXML
+    public Button b_add;
 
     private ObservableList<Resource> materialsList = FXCollections.observableArrayList();
     private ObservableList<Resource> machinesList = FXCollections.observableArrayList();
@@ -57,6 +61,8 @@ public class E4_controller extends GenericController {
     public void initialize(){
         //todo: dodać możliwość agregowania materiałów po nazwie
         //TODO : wypełnienie dropdowna typów
+        // TODO: DODAĆ USUWANIE
+        // todo: zmiana kolumn w tabeli i opis
 
         // Utworzone w bazie danych podprogramy składowane mają być wywoływane
         //z chociaż jednego ekranu aplikacji (w przypadku funkcji jej wynik ma zostać
@@ -89,7 +95,7 @@ public class E4_controller extends GenericController {
                 Machine machine = new Machine(
                         getResultSet().getInt("ID"),
                         getResultSet().getString("NAME"),
-                        new Location(getResultSet().getString("ROOM"), getResultSet().getString("PLACE")));
+                        new Location(getResultSet().getString("LOCATION_ROOM"), getResultSet().getString("LOCATION_PLACE")));
                 machinesList.add(machine);
             }
         } catch (SQLException e){
@@ -98,6 +104,39 @@ public class E4_controller extends GenericController {
         }
 
         /** UI setup **/
+
+        locationBox.setCellFactory(new Callback<ListView<Location>, ListCell<Location>>() {
+            @Override
+            public ListCell<Location> call(ListView<Location> locationListView) {
+                return new ListCell<Location>(){
+                    @Override
+                    protected void updateItem(Location item, boolean b) {
+                        super.updateItem(item, b);
+                        if(item == null || b) {
+                            setText("");
+                        }else{
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        });
+
+        setResultSet(DB_utility.executeQuery("select room, place from location left outer join tool on (location.room = tool.location_room and location.place=tool.location_place) left outer join machine on (location.room = machine.location_room and location.place=machine.location_place) left outer join material on (location.room = material.location_room and location.place=material.location_place) where tool.name is null and machine.name is null and material.name is null order by room"));
+
+        try {
+            while (getResultSet().next()) {
+                Location location = new Location(
+                        getResultSet().getString("ROOM"),
+                        getResultSet().getString("PLACE"));
+                locationBox.getItems().add(location);
+            }
+        } catch (SQLException e){
+            System.err.println("SQLException podczas ładowania wyniku tools!");
+            updateStatusLeft("SQLException!");
+        }
+
+        b_add.setDisable(true);
 
         tableView.setPlaceholder(new Label("Opis wybranego materiału"));
         Platform.runLater(() -> listView.requestFocus());
@@ -120,11 +159,11 @@ public class E4_controller extends GenericController {
                     public void changed(ObservableValue<? extends Tab> observableValue, Tab t, Tab t1) {
                         if(t1.getText().equals(tabWarehouse.getText())) {
                             /** WAREHOUSE **/
-                            System.out.println("we i n dawerhuz");
+                            b_add.setVisible(false);
                         }
                         if(t1.getText().equals(tabAdd.getText())){
                             /** ADD **/
-                            System.out.println("we in add mode");
+                            b_add.setVisible(true);
                         }
                     }
                 }
@@ -150,26 +189,25 @@ public class E4_controller extends GenericController {
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getClickCount() == 1 && listView.getSelectionModel().getSelectedItem() != null){
                     tableView.getItems().clear();
-                    //tableView.getItems().add(listView.getSelectionModel().getSelectedItem());
+                    if(comboBox.getSelectionModel().getSelectedItem().equals("Materiały")){
+
+                    } else if (comboBox.getSelectionModel().getSelectedItem().equals("Maszyny")){
+
+                    }
                 }
             }
         });
 
-        TableColumn<Material, String> idCol = new TableColumn<>("ID");
-        TableColumn<Material, String> nameCol = new TableColumn<>("NAZWA");
-        TableColumn<Material, String> amtCol = new TableColumn<>("ILOŚĆ JEDN.");
-        TableColumn<Material, String> locationCol = new TableColumn<>("POŁOŻENIE");
+        TableColumn<Resource, String> idCol = new TableColumn<>("ID");
+        TableColumn<Resource, String> nameCol = new TableColumn<>("NAZWA");
+        TableColumn<Resource, String> amtCol = new TableColumn<>("ILOŚĆ JEDN.");
+        TableColumn<Resource, String> locationCol = new TableColumn<>("POŁOŻENIE");
 
         idCol.setCellValueFactory(new PropertyValueFactory<>("id"));
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         amtCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        locationCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Material, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<Material, String> data) {
-                if (data != null){
-                    return new ReadOnlyStringWrapper(data.getValue().getLocation().toString());
-                } else return new ReadOnlyStringWrapper("");
-            }
+        locationCol.setCellValueFactory(resourceStringCellDataFeatures -> {
+            return null;
         });
 
         tableView.getColumns().add(idCol);
@@ -186,6 +224,8 @@ public class E4_controller extends GenericController {
         nameCol.setResizable(false);
         amtCol.setResizable(false);
         locationCol.setResizable(false);
+
+        listView.setItems(materialsList);
     }
 
 }
