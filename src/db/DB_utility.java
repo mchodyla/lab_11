@@ -49,7 +49,8 @@ public class DB_utility {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(query);
         } catch(SQLException e){
-            System.err.println("Connection lost!");
+            System.err.println("Error executing query!");
+            System.err.println(e);
         }
         return resultSet;
     }

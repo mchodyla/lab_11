@@ -29,4 +29,18 @@ public class Employee
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || getClass() != obj.getClass()){
+            return false;
+        } else {
+            return (this.getName().equals(((Employee) obj).getName()));
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 7 + 5*this.getName().hashCode();
+    }
 }

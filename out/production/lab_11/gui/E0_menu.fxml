@@ -1,38 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.E0_controller">
+<VBox fx:id="rootVBox" alignment="CENTER" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.E0_controller">
    <children>
       <Separator prefWidth="200.0" />
-      <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER" nodeOrientation="LEFT_TO_RIGHT" spacing="5.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="b_internal" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoInternal" prefWidth="300.0" text="Usługi wewnętrzne" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="b_tools" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoTools" text="Narzedzia" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="b_internal" alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoInternal" prefWidth="300.0" text="Usługa wewnętrzna" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="b_tools" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoTools" text="Narzędzia" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
-            <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER_RIGHT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" spacing="5.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Button fx:id="b_external" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoExternal" prefWidth="300.0" text="Usługi zewnętrzne" VBox.vgrow="ALWAYS" />
-                  <Button fx:id="b_materials" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoMaterials" text="Materiały" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="b_external" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoExternal" prefWidth="300.0" text="Usługa zewnętrzna" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="b_materials" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoMaterials" text="Materiały i Maszyny" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
          </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </HBox>
-      <Separator prefWidth="200.0" />
-      <Button fx:id="b_tables" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#gotoTables" prefHeight="100.0" prefWidth="600.0" text="Edycja Tabel" />
-      <Separator prefWidth="200.0" />
-      <AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="15.0" VBox.vgrow="NEVER">
+      <Separator />
+      <HBox alignment="CENTER" VBox.vgrow="NEVER">
          <children>
             <Label fx:id="statusLabel" alignment="TOP_LEFT" text="Status" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="statusLabel2" alignment="TOP_LEFT" text="Status" visible="false" />
          </children>
-      </AnchorPane>
+         <padding>
+            <Insets left="2.0" right="2.0" />
+         </padding>
+      </HBox>
    </children>
 </VBox>

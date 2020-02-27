@@ -19,6 +19,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
         primaryStage.setTitle("Menu");
         primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setResizable(false);
         primaryStage.show();
 
         if(DB_utility.getConnection() == null){

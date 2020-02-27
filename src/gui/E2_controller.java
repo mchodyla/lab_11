@@ -1,6 +1,8 @@
 package gui;
 
 import db.DB_utility;
+import javafx.beans.binding.Bindings;
+import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ public class E2_controller extends E1_controller {
 
     @Override
     public void initialize() {
+
         setResultSet(DB_utility.executeQuery("SELECT * FROM EMPLOYEE"));
 
         try{
@@ -62,8 +65,25 @@ public class E2_controller extends E1_controller {
             }
         });
 
+        providerBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldSelection, newSelection) -> {
+            consumerBox.getItems().remove(newSelection);
+            if(oldSelection != null && !consumerBox.getItems().contains(oldSelection)) consumerBox.getItems().add(oldSelection);
+        });
+
+        consumerBox.getSelectionModel().selectedItemProperty().addListener((observableValue, oldSelection, newSelection) -> {
+            providerBox.getItems().remove(newSelection);
+            if(oldSelection != null && !providerBox.getItems().contains(oldSelection)) providerBox.getItems().add(oldSelection);
+        });
+
         consumerBox.setItems(consumerEmployees);
 
         super.initialize();
+
+        b_save.disableProperty().bind(
+                Bindings.or(
+                        Bindings.or(
+                            providerBox.valueProperty().isEqualTo(providerBox.placeholderProperty()),
+                            serviceBox.valueProperty().isEqualTo(serviceBox.placeholderProperty())),
+                consumerBox.valueProperty().isEqualTo(consumerBox.placeholderProperty())));
     }
 }

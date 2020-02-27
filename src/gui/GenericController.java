@@ -49,10 +49,19 @@ public class GenericController {
         });
     }
 
+    public Label getStatusLabelLeft() {
+        return statusLabel;
+    }
+
+    public Label getStatusLabelRight() {
+        return statusLabel2;
+    }
+
     public void gotoMenu(ActionEvent event) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("E0_menu.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
+        window.setResizable(false);
         window.setTitle("Menu");
         window.show();
     }

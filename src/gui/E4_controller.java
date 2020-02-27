@@ -2,7 +2,9 @@ package gui;
 
 import db.DB_utility;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -12,8 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import model.Location;
-import model.Material;
+import model.*;
 
 import java.sql.SQLException;
 
@@ -22,18 +23,28 @@ public class E4_controller extends GenericController {
     @FXML
     public TableView<Material> tableView;
     @FXML
-    public ListView<Material> listView;
+    public ListView<Resource> listView;
     @FXML
     public TextField searchField;
+    @FXML
+    public ComboBox<String> comboBox;
+    @FXML
+    public TabPane tabPane;
+    @FXML
+    public Tab tabWarehouse;
+    @FXML
+    public Tab tabAdd;
 
-    private ObservableList<Material> materialsList = FXCollections.observableArrayList();
+    private ObservableList<Resource> materialsList = FXCollections.observableArrayList();
+    private ObservableList<Resource> machinesList = FXCollections.observableArrayList();
+    private ObservableList<String> comboList = FXCollections.observableArrayList("Materiały","Maszyny");
 
     public void filterList(String oldValue, String newValue){
-        ObservableList<Material> filteredList = FXCollections.observableArrayList();
+        ObservableList<Resource> filteredList = FXCollections.observableArrayList();
         if(searchField == null || (newValue.length() < oldValue.length()) || newValue == " "){
-            listView.setItems(materialsList);
+            listView.setItems(machinesList);
         } else {
-            for (Material m : listView.getItems()){
+            for (Resource m : listView.getItems()){
                 String filterText = m.getResourceName();
                 if (filterText.toUpperCase().contains(searchField.getText().toUpperCase())){
                     filteredList.add(m);
@@ -44,8 +55,12 @@ public class E4_controller extends GenericController {
     }
 
     public void initialize(){
-        tableView.setPlaceholder(new Label("Opis wybranego materiału"));
-        Platform.runLater(() -> listView.requestFocus());
+        //todo: dodać możliwość agregowania materiałów po nazwie
+        //TODO : wypełnienie dropdowna typów
+
+        // Utworzone w bazie danych podprogramy składowane mają być wywoływane
+        //z chociaż jednego ekranu aplikacji (w przypadku funkcji jej wynik ma zostać
+        //zaprezentowany w ramach danych ekranu).
 
         /** Initial DB Requests **/
 
@@ -67,21 +82,66 @@ public class E4_controller extends GenericController {
             updateStatusLeft("SQLException!");
         }
 
+        setResultSet(DB_utility.executeQuery("SELECT * FROM MACHINE"));
+
+        try{
+            while(getResultSet().next()){
+                Machine machine = new Machine(
+                        getResultSet().getInt("ID"),
+                        getResultSet().getString("NAME"),
+                        new Location(getResultSet().getString("ROOM"), getResultSet().getString("PLACE")));
+                machinesList.add(machine);
+            }
+        } catch (SQLException e){
+            System.err.println("SQLException podczas ładowania wyniku machines!");
+            updateStatusLeft("SQLException!");
+        }
+
         /** UI setup **/
+
+        tableView.setPlaceholder(new Label("Opis wybranego materiału"));
+        Platform.runLater(() -> listView.requestFocus());
+
+        comboBox.setItems(comboList);
+        comboBox.getSelectionModel().selectFirst();
+        comboBox.valueProperty().addListener((observableValue, s, t1) -> {
+            if(t1 != null){
+                if( t1 == "Materiały"){
+                    listView.setItems(materialsList);
+                }else if (t1 == "Maszyny"){
+                    listView.setItems(machinesList);
+                }
+            }
+        });
+
+        tabPane.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Tab>() {
+                    @Override
+                    public void changed(ObservableValue<? extends Tab> observableValue, Tab t, Tab t1) {
+                        if(t1.getText().equals(tabWarehouse.getText())) {
+                            /** WAREHOUSE **/
+                            System.out.println("we i n dawerhuz");
+                        }
+                        if(t1.getText().equals(tabAdd.getText())){
+                            /** ADD **/
+                            System.out.println("we in add mode");
+                        }
+                    }
+                }
+        );
+
+
+        getStatusLabelLeft().setVisible(false);
 
         searchField.textProperty().addListener((observableValue, s, t1) -> {
             filterList(s,t1);
         });
 
-        listView.setCellFactory(materialListView -> new ListCell<>(){
+        listView.setCellFactory(resourceListView -> new ListCell<>(){
             @Override
-            protected void updateItem(Material item, boolean b) {
-                super.updateItem(item, b);
-                if(item==null){
-                    setText(null);
-                }else{
-                    setText(item.getResourceName());
-                }
+            protected void updateItem(Resource resource, boolean b) {
+                super.updateItem(resource, b);
+                setText(b ? null : resource.getResourceName());
             }
         });
 
@@ -90,7 +150,7 @@ public class E4_controller extends GenericController {
             public void handle(MouseEvent mouseEvent) {
                 if(mouseEvent.getClickCount() == 1 && listView.getSelectionModel().getSelectedItem() != null){
                     tableView.getItems().clear();
-                    tableView.getItems().add(listView.getSelectionModel().getSelectedItem());
+                    //tableView.getItems().add(listView.getSelectionModel().getSelectedItem());
                 }
             }
         });
@@ -126,8 +186,6 @@ public class E4_controller extends GenericController {
         nameCol.setResizable(false);
         amtCol.setResizable(false);
         locationCol.setResizable(false);
-
-        listView.setItems(materialsList);
     }
 
 }

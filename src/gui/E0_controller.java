@@ -36,8 +36,7 @@ public class E0_controller extends GenericController {
 
     private StringProperty statusProperty = new SimpleStringProperty("Status");
 
-    public void initialize(){
-        this.updateStatusLeft("TEST");
+    public void initialize(){ updateStatusLeft("");
     }
 
     public void gotoInternal(ActionEvent event) throws Exception{
@@ -68,7 +67,8 @@ public class E0_controller extends GenericController {
         Parent root = FXMLLoader.load(getClass().getResource("E4_materials.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
-        window.setTitle("Materiały");
+        window.setResizable(true);
+        window.setTitle("Materiały i Maszyny");
         window.show();
     }
 

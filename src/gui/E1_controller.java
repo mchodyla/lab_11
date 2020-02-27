@@ -1,8 +1,8 @@
 package gui;
 
 import db.DB_utility;
-import javafx.beans.InvalidationListener;
-import javafx.beans.value.ChangeListener;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.value.ObservableBooleanValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +18,6 @@ import java.util.Arrays;
 
 public class E1_controller extends GenericController{
 
-    @FXML
-    public Label dateLabel;
     @FXML
     public Button b_save;
     @FXML
@@ -64,6 +62,10 @@ public class E1_controller extends GenericController{
             }
             leftListView.setItems(filteredList);
         }
+    }
+
+    public void saveReport(){
+        System.out.println();
     }
 
     public void initialize(){
@@ -152,8 +154,9 @@ public class E1_controller extends GenericController{
     /** UI setup :
         DATE, DESCRIPTION AREA, COMBO BOXES **/
 
-        updateStatusLeft("Data wykonania usługi: ");
+        updateStatusLeft("Data: ");
         updateStatusRight(new SimpleDateFormat("yyyy.MM.dd HH:mm").format(new Timestamp(System.currentTimeMillis())));
+        getStatusLabelRight().setVisible(true);
 
         descriptionArea.setTextFormatter(new TextFormatter<String>(change ->
                 change.getControlNewText().length() <= MAX_CHARS ? change : null));
@@ -162,10 +165,8 @@ public class E1_controller extends GenericController{
             if(newValue == null){
                 searchField.setDisable(true);
                 searchField.setText("");
-                System.out.println(resourceBox.getSelectionModel().getSelectedItem());
             }
             else {
-                System.out.println(resourceBox.getSelectionModel().getSelectedItem());
                 searchField.setDisable(false);
                 searchField.setText("");
                 switch (resourceBox.getSelectionModel().getSelectedItem()){
@@ -263,8 +264,8 @@ public class E1_controller extends GenericController{
             }
         });
 
-        Label placeholderLeft = new Label("Wyszukiwarka");
-        Label placeholderRight = new Label("Wykorzystane zasoby");
+        Label placeholderLeft = new Label("     Wyszukiwarka\n(wybierz typ zasobu)");
+        Label placeholderRight = new Label("     Wykorzystane zasoby\n(dodawanie z wyszukiwarki)");
 
         leftListView.setPlaceholder(placeholderLeft);
         rightListView.setPlaceholder(placeholderRight);
@@ -276,40 +277,13 @@ public class E1_controller extends GenericController{
             filterResources(s,t1);
         });
 
-        //TODO: po wybraniu pracownika z jednej z list usunąć go z drugiej i vice versa
-        //TODO: Odblokować guzik "Zapis" wtw gdy : (provider, consumer, service type) są wybrane !
+    /** Save button bindings **/
+        //b_save.disableProperty().bind(providerBox.valueProperty().isEqualTo(providerBox.placeholderProperty()));
 
-        b_save.disableProperty().bind(new ObservableBooleanValue() {
-            @Override
-            public boolean get() {
-                return false;
-            }
-
-            @Override
-            public void addListener(ChangeListener<? super Boolean> changeListener) {
-
-            }
-
-            @Override
-            public void removeListener(ChangeListener<? super Boolean> changeListener) {
-
-            }
-
-            @Override
-            public Boolean getValue() {
-                return null;
-            }
-
-            @Override
-            public void addListener(InvalidationListener invalidationListener) {
-
-            }
-
-            @Override
-            public void removeListener(InvalidationListener invalidationListener) {
-
-            }
-        });
+        b_save.disableProperty().bind(
+                Bindings.or(
+                        providerBox.valueProperty().isEqualTo(providerBox.placeholderProperty()),
+                        serviceBox.valueProperty().isEqualTo(serviceBox.placeholderProperty())));
 
     }
 }
