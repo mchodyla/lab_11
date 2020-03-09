@@ -67,7 +67,7 @@ public class E0_controller extends GenericController {
         Parent root = FXMLLoader.load(getClass().getResource("E4_materials.fxml"));
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(new Scene(root, 600, 400));
-        window.setResizable(true);
+        //window.setResizable(true);
         window.setTitle("Materiały i Maszyny");
         window.show();
     }

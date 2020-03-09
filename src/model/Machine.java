@@ -1,9 +1,34 @@
 package model;
 
+import db.DB_utility;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Machine implements Resource{
     private Integer id;
     private String name;
     private Location location;
+
+    public static ObservableList<Machine> getListFromTable(){
+        ResultSet rs = DB_utility.executeQuery("SELECT * FROM MACHINE");
+        ObservableList<Machine> outputList = FXCollections.observableArrayList();
+        try {
+            while (rs.next()) {
+                Machine machine = new Machine(
+                        rs.getInt("ID"),
+                        rs.getString("NAME"),
+                        new Location(rs.getString("LOCATION_ROOM"),rs.getString("LOCATION_PLACE")));
+                outputList.add(machine);
+            }
+            return outputList;
+        } catch (SQLException e){
+            System.err.println("SQLException ! : " + e.toString());
+            return null;
+        }
+    }
 
     public int getId() {
         return id;

@@ -1,33 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.E3_controller">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.E3_controller">
    <children>
       <TabPane fx:id="tabPane">
          <tabs>
-            <Tab fx:id="tabRent" closable="false" text="Wypożyczalnia">
+            <Tab fx:id="rentTab" closable="false" text="Wypożyczalnia">
                <content>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="600.0" spacing="5.0">
                      <children>
                         <HBox alignment="CENTER" spacing="5.0">
                            <children>
-                              <RadioButton fx:id="radioButtonRenting" mnemonicParsing="false" selected="true" text="Wypożyczanie">
+                              <RadioButton fx:id="rentRadioButtonRent" mnemonicParsing="false" selected="true" text="Wypożyczanie">
                                  <toggleGroup>
                                     <ToggleGroup fx:id="toggleGroup" />
                                  </toggleGroup>
                               </RadioButton>
-                              <RadioButton fx:id="radioButtonReturning" mnemonicParsing="false" text="Oddawanie" toggleGroup="$toggleGroup" />
+                              <RadioButton fx:id="rentRadioButtonReturn" mnemonicParsing="false" text="Oddawanie" toggleGroup="$toggleGroup" />
                               <Region HBox.hgrow="ALWAYS" />
-                              <ComboBox fx:id="comboBox" prefWidth="250.0" promptText="*Wypożyczający" HBox.hgrow="ALWAYS" />
+                              <ComboBox fx:id="rentComboBoxWho" prefWidth="250.0" promptText="*Wypożyczający" HBox.hgrow="ALWAYS" />
                            </children>
                            <padding>
                               <Insets left="7.0" right="5.0" top="5.0" />
                            </padding>
                         </HBox>
-                        <TextField fx:id="searchField" promptText="Wyszukiwanie">
+                        <TextField fx:id="rentSearchField" promptText="Wyszukiwanie">
                            <VBox.margin>
                               <Insets left="5.0" right="5.0" />
                            </VBox.margin>
@@ -37,14 +50,14 @@
                               <Insets />
                            </VBox.margin>
                            <children>
-                              <ListView fx:id="leftListView" HBox.hgrow="ALWAYS" />
-                              <ListView fx:id="rightListView" HBox.hgrow="ALWAYS" />
+                              <ListView fx:id="rentLeftListView" HBox.hgrow="ALWAYS" />
+                              <ListView fx:id="rentRightListView" HBox.hgrow="ALWAYS" />
                            </children>
                            <padding>
                               <Insets left="5.0" right="5.0" />
                            </padding>
                         </HBox>
-                        <TableView fx:id="descriptionTable" prefHeight="55.0" prefWidth="600.0">
+                        <TableView fx:id="rentTableDescription" prefHeight="55.0" prefWidth="600.0">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -56,7 +69,7 @@
                   </VBox>
                </content>
             </Tab>
-            <Tab fx:id="tabHistory" closable="false" text="Historia">
+            <Tab fx:id="historyTab" closable="false" text="Historia">
                <content>
                   <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="600.0" spacing="5.0">
                      <children>
@@ -72,7 +85,7 @@
                   </VBox>
                </content>
             </Tab>
-            <Tab fx:id="tabAdd" closable="false" text="Dodawanie">
+            <Tab fx:id="addTab" closable="false" text="Dodawanie">
                <content>
                   <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="600.0" spacing="5.0">
                      <children>
@@ -83,7 +96,7 @@
                                  <children>
                                     <Label text="Nazwa narzędzia*" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <TextField fx:id="toolNameField" prefWidth="300.0" promptText="(max 100 znaków)" />
+                                    <TextField fx:id="addTextFieldToolName" prefWidth="300.0" promptText="(max 100 znaków)" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -93,7 +106,7 @@
                                  <children>
                                     <Label text="Lokalizacja*" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <ComboBox fx:id="locationBox" prefWidth="300.0" promptText="Pomieszczenie + miejsce" />
+                                    <ComboBox fx:id="addComboBoxLocation" prefWidth="300.0" promptText="Pomieszczenie + miejsce" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -103,7 +116,7 @@
                                  <children>
                                     <Label text="Data zakupu" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <DatePicker fx:id="datePicker" prefWidth="300.0" />
+                                    <DatePicker fx:id="addDatePickerBorrowed" prefWidth="300.0" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -113,7 +126,7 @@
                                  <children>
                                     <Label text="Cena" />
                                     <Region HBox.hgrow="ALWAYS" />
-                                    <TextField fx:id="toolPriceField" prefWidth="300.0" promptText="(max 99,999,999.99)" />
+                                    <TextField fx:id="addTextFieldToolPrice" prefWidth="300.0" promptText="(max 99,999,999.99)" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -133,6 +146,31 @@
                   </VBox>
                </content>
             </Tab>
+            <Tab fx:id="deleteTab" closable="false" text="Usuwanie">
+               <content>
+                  <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="312.0" prefWidth="600.0" spacing="5.0">
+                     <children>
+                        <VBox prefHeight="150.0" spacing="5.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <TextField fx:id="deleteSearchField" promptText="Wyszukiwanie" />
+                              <ListView fx:id="deleteListView" />
+                           </children>
+                           <padding>
+                              <Insets left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </VBox>
+                        <TableView fx:id="deleteDescriptionTable" prefHeight="55.0" prefWidth="600.0">
+                           <columnResizePolicy>
+                              <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                           </columnResizePolicy>
+                           <VBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </VBox.margin>
+                        </TableView>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
          </tabs>
       </TabPane>
       <VBox VBox.vgrow="NEVER">
@@ -146,12 +184,12 @@
                   <Region HBox.hgrow="ALWAYS" />
                   <HBox>
                      <children>
-                        <Button fx:id="b_rent" disable="true" mnemonicParsing="false" onAction="#rentTools" prefWidth="100.0" text="Wypożycz">
+                        <Button fx:id="buttonRent" disable="true" mnemonicParsing="false" onAction="#rentTools" prefWidth="100.0" text="Wypożycz">
                            <HBox.margin>
                               <Insets right="5.0" />
                            </HBox.margin>
                         </Button>
-                        <Button fx:id="b_return" disable="true" mnemonicParsing="false" onAction="#rightButtonMethod" prefWidth="100.0" text="Oddaj">
+                        <Button fx:id="buttonRight" disable="true" mnemonicParsing="false" onAction="#rightButtonMethod" prefWidth="100.0" text="Oddaj">
                            <HBox.margin>
                               <Insets left="5.0" />
                            </HBox.margin>

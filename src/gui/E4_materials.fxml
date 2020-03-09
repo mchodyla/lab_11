@@ -129,7 +129,7 @@
                   <Region HBox.hgrow="ALWAYS" />
                   <ComboBox fx:id="comboBox" promptText="Typ zasobu" HBox.hgrow="ALWAYS" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="b_add" mnemonicParsing="false" onAction="#gotoMenu" prefWidth="100.0" text="Dodaj" visible="false" />
+                  <Button fx:id="b_add" mnemonicParsing="false" onAction="#addNewMaterial" prefWidth="100.0" text="Dodaj" visible="false" />
                </children>
                <padding>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

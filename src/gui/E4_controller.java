@@ -38,9 +38,11 @@ public class E4_controller extends GenericController {
     public Tab tabAdd;
     @FXML
     public Button b_add;
+    @FXML
+    public TextField nameField;
 
-    private ObservableList<Resource> materialsList = FXCollections.observableArrayList();
-    private ObservableList<Resource> machinesList = FXCollections.observableArrayList();
+    private ObservableList<Resource> materialsList = FXCollections.observableArrayList(Material.getListFromTable());
+    private ObservableList<Resource> machinesList = FXCollections.observableArrayList(Machine.getListFromTable());
     private ObservableList<String> comboList = FXCollections.observableArrayList("Materiały","Maszyny");
 
     public void filterList(String oldValue, String newValue){
@@ -58,50 +60,20 @@ public class E4_controller extends GenericController {
         }
     }
 
+    public void addNewMaterial(){
+        System.out.println("Materiał do dodania : " + nameField.getText());
+    }
+
     public void initialize(){
         //todo: dodać możliwość agregowania materiałów po nazwie
-        //TODO : wypełnienie dropdowna typów
-        // TODO: DODAĆ USUWANIE
         // todo: zmiana kolumn w tabeli i opis
+        // todo: guzik "dodaj" zmienic na "usun" w karcie delete i pojawić go
 
         // Utworzone w bazie danych podprogramy składowane mają być wywoływane
         //z chociaż jednego ekranu aplikacji (w przypadku funkcji jej wynik ma zostać
         //zaprezentowany w ramach danych ekranu).
 
         /** Initial DB Requests **/
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM MATERIAL"));
-
-        try{
-            while(getResultSet().next()){
-                Material material = new Material();
-                material.setId(getResultSet().getInt("ID"));
-                material.setName(getResultSet().getString("NAME"));
-                material.setAmount(getResultSet().getString("AMOUNT"));
-                material.setPurchase_date(getResultSet().getDate("PURCHASE_DATE"));
-                material.setPrice(getResultSet().getFloat("PRICE"));
-                material.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"), getResultSet().getString("LOCATION_PLACE")));
-                materialsList.add(material);
-            }
-        } catch (SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku tools!");
-            updateStatusLeft("SQLException!");
-        }
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM MACHINE"));
-
-        try{
-            while(getResultSet().next()){
-                Machine machine = new Machine(
-                        getResultSet().getInt("ID"),
-                        getResultSet().getString("NAME"),
-                        new Location(getResultSet().getString("LOCATION_ROOM"), getResultSet().getString("LOCATION_PLACE")));
-                machinesList.add(machine);
-            }
-        } catch (SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku machines!");
-            updateStatusLeft("SQLException!");
-        }
 
         /** UI setup **/
 
@@ -164,6 +136,10 @@ public class E4_controller extends GenericController {
                         if(t1.getText().equals(tabAdd.getText())){
                             /** ADD **/
                             b_add.setVisible(true);
+                            b_add.disableProperty().bind(
+                                    Bindings.or(
+                                            locationBox.valueProperty().isEqualTo(locationBox.placeholderProperty()),
+                                            nameField.textProperty().isEmpty()));
                         }
                     }
                 }

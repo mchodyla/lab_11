@@ -23,7 +23,7 @@ public class E1_controller extends GenericController{
     @FXML
     public ComboBox<Employee> providerBox;
     @FXML
-    public ComboBox<String> serviceBox;
+    public ComboBox<ServiceType> serviceBox;
     @FXML
     public ComboBox<String> resourceBox;
     @FXML
@@ -35,13 +35,13 @@ public class E1_controller extends GenericController{
     @FXML
     public TextArea descriptionArea;
 
-    private ObservableList<Employee> providerEmployees = FXCollections.observableArrayList();
-    private ObservableList<String> serviceTypes = FXCollections.observableArrayList();
+    private ObservableList<Employee> providerEmployees = Employee.getListFromTable();
+    private ObservableList<ServiceType> serviceTypes = ServiceType.getListFromTable();
     private ObservableList<String> resourceTypes = FXCollections.observableArrayList(Arrays.asList("Maszyny","Materiały","Narzędzia"));
 
-    private ObservableList<Resource> machinesList = FXCollections.observableArrayList();
-    private ObservableList<Resource> materialsList = FXCollections.observableArrayList();
-    private ObservableList<Resource> toolsList = FXCollections.observableArrayList();
+    private ObservableList<Resource> machinesList = FXCollections.observableArrayList(Machine.getListFromTable());
+    private ObservableList<Resource> materialsList = FXCollections.observableArrayList(Material.getListFromTable());
+    private ObservableList<Resource> toolsList = FXCollections.observableArrayList(Tool.getListFromTable());
 
     private ObservableList<Resource> resourcesList;
     private ObservableList<Resource> selectedResourcesList = FXCollections.observableArrayList();
@@ -65,91 +65,18 @@ public class E1_controller extends GenericController{
     }
 
     public void saveReport(){
-        System.out.println();
+        System.out.println("ZAPISZ WYKONANIE USŁUGI WEWNĘTRZNEJ : ");
+        System.out.println("Provider : " + providerBox.getSelectionModel().getSelectedItem().getName());
+        System.out.println("Data : " + this.getStatusLabelRight().getText());
+        System.out.println("Typ : " + serviceBox.getSelectionModel().getSelectedItem().getName());
+        System.out.println("Opis : " + descriptionArea.getText());
+        System.out.println("Wykorzystane zasoby : ");
+        for (Resource r : rightListView.getItems()){
+            System.out.println(r.getResourceName());
+        }
     }
 
     public void initialize(){
-
-    /** Initial DB queries **/
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM EMPLOYEE"));
-
-        try{
-            while (getResultSet().next()){
-                Employee employee = new Employee();
-                employee.setName(getResultSet().getString("NAME"));
-                employee.setEmail(getResultSet().getString("EMAIL"));
-                employee.setDepartmentName(getResultSet().getString("DEPARTMENT_NAME"));
-                providerEmployees.add(employee);
-            }
-        }catch(SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku EMPLOYEE!");
-            updateStatusLeft("SQLException!");
-        }
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM SERVICE_TYPE"));
-
-        try{
-            while (getResultSet().next()){
-                String serviceType = getResultSet().getString("SERVICE_TYPE");
-                serviceTypes.add(serviceType);
-            }
-        }catch(SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku SERVICE_TYPE!");
-            updateStatusLeft("SQLException!");
-        }
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM MACHINE"));
-
-        try {
-            while (getResultSet().next()) {
-                Machine machine = new Machine();
-                machine.setId(getResultSet().getInt("ID"));
-                machine.setName(getResultSet().getString("NAME"));
-                machine.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
-                machinesList.add(machine);
-            }
-            updateStatusLeft("");
-        } catch (SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku MACHINE!");
-            updateStatusLeft("SQLException!");
-        }
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM MATERIAL"));
-
-        try {
-            while (getResultSet().next()) {
-                Material material = new Material();
-                material.setId(getResultSet().getInt("ID"));
-                material.setName(getResultSet().getString("NAME"));
-                material.setAmount(getResultSet().getString("AMOUNT"));
-                material.setPurchase_date(getResultSet().getDate("PURCHASE_DATE"));
-                material.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
-                materialsList.add(material);
-            }
-            updateStatusLeft("");
-        } catch (SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku MATERIAL!");
-            updateStatusLeft("SQLException!");
-        }
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM TOOL"));
-
-        try {
-            while (getResultSet().next()) {
-                Tool tool = new Tool();
-                tool.setId(getResultSet().getInt("ID"));
-                tool.setName(getResultSet().getString("NAME"));
-                tool.setPurchase_date(getResultSet().getDate("PURCHASE_DATE"));
-                tool.setPrice(getResultSet().getFloat("PRICE"));
-                tool.setLocation(new Location(getResultSet().getString("LOCATION_ROOM"),getResultSet().getString("LOCATION_PLACE")));
-                toolsList.add(tool);
-            }
-            updateStatusLeft("");
-        } catch (SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku TOOL!");
-            updateStatusLeft("SQLException!");
-        }
 
     /** UI setup :
         DATE, DESCRIPTION AREA, COMBO BOXES **/
@@ -214,6 +141,31 @@ public class E1_controller extends GenericController{
         });
         providerBox.setItems(providerEmployees);
 
+        serviceBox.setCellFactory(new Callback<ListView<ServiceType>, ListCell<ServiceType>>() {
+            @Override
+            public ListCell<ServiceType> call(ListView<ServiceType> serviceTypeListView) {
+                return new ListCell<>(){
+                    @Override
+                    protected void updateItem(ServiceType serviceType, boolean b) {
+                        super.updateItem(serviceType, b);
+                        if(serviceType==null || b){
+                            setText("");
+                        }else {
+                            setText(serviceType.getName());
+                        }
+                    }
+                };
+            }
+        });
+        serviceBox.setButtonCell(new ListCell<>(){
+            @Override
+            protected void updateItem(ServiceType serviceType, boolean b) {
+                super.updateItem(serviceType, b);
+                if(serviceType != null){
+                    setText(serviceType.getName());
+                }
+            }
+        });
         serviceBox.setItems(serviceTypes);
 
     /** UI setup :

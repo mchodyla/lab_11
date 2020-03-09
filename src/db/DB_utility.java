@@ -1,6 +1,9 @@
 package db;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
+import model.DataBaseEntity;
 
 import java.sql.*;
 import java.util.Properties;
@@ -54,4 +57,20 @@ public class DB_utility {
         }
         return resultSet;
     }
+
+    /*
+    public static <T extends DataBaseEntity> ObservableList<T> getTableToList(T model){
+        ObservableList<T> output = FXCollections.observableArrayList();
+        executeQuery("SELECT * FROM " + model.getTableName());
+        try{
+            ResultSetMetaData md = resultSet.getMetaData();
+            while(resultSet.next()){
+                T element = new T();
+            }
+        }catch (SQLException e){
+        }
+        return null;
+    }
+
+     */
 }

@@ -19,25 +19,16 @@ public class E2_controller extends E1_controller {
     @FXML
     public ComboBox<Employee> consumerBox;
 
-    private ObservableList<Employee> consumerEmployees = FXCollections.observableArrayList();
+    private ObservableList<Employee> consumerEmployees = Employee.getListFromTable();
+
+    @Override
+    public void saveReport() {
+        System.out.println("Consumer : " + consumerBox.getSelectionModel().getSelectedItem().getName());
+        super.saveReport();
+    }
 
     @Override
     public void initialize() {
-
-        setResultSet(DB_utility.executeQuery("SELECT * FROM EMPLOYEE"));
-
-        try{
-            while (getResultSet().next()){
-                Employee employee = new Employee();
-                employee.setName(getResultSet().getString("NAME"));
-                employee.setEmail(getResultSet().getString("EMAIL"));
-                employee.setDepartmentName(getResultSet().getString("DEPARTMENT_NAME"));
-                consumerEmployees.add(employee);
-            }
-        }catch(SQLException e){
-            System.err.println("SQLException podczas ładowania wyniku EMPLOYEE!");
-            updateStatusLeft("SQLException!");
-        }
 
         consumerBox.setCellFactory(new Callback<ListView<Employee>, ListCell<Employee>>() {
             @Override
